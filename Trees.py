@@ -2,7 +2,6 @@ class ABR:
     osCounter = 0
     found = False
     rankedNode = None
-    rankedKey = None
 
     def __init__(self):
         self.root = None
@@ -26,8 +25,9 @@ class ABR:
         else:
             y.right = newNode
         self.size += 1
+        return newNode
 
-    def displayTree(self):
+    def display(self):
         self.preorderTreeWalk(self.root)
         print('\n', end='')
 
@@ -51,14 +51,14 @@ class ABR:
                 self.osCounter += 1
                 self.inorderTreeWalkSelect(x.right, i)
 
-    def inorderTreeWalkRank(self, x):
+    def inorderTreeWalkRank(self, x, node):
         if x is not None:  # and not self.found:
-            self.inorderTreeWalkRank(x.left)
-            if x.key is self.rankedKey and not self.found:
+            self.inorderTreeWalkRank(x.left, node)
+            if x.key is node.key and not self.found:
                 self.found = True
             elif not self.found:
                 self.osCounter += 1
-                self.inorderTreeWalkRank(x.right)
+                self.inorderTreeWalkRank(x.right, node)
 
     def OS_Select(self, i):
         self.osCounter = 1
@@ -69,17 +69,15 @@ class ABR:
         self.rankedNode = None
         return x
 
-    def OS_Rank(self, key):
+    def OS_Rank(self, node):
         self.osCounter = 1
-        self.rankedKey = key
-        self.inorderTreeWalkRank(self.root)
-        x = self.osCounter
+        self.inorderTreeWalkRank(self.root, node)
+        i = self.osCounter
         self.osCounter = 0
         self.found = False
-        self.rankedKey = None
-        if x > self.size:
-            x = 0
-        return x
+        if i > self.size:
+            i = 0
+        return i
 
 
 class ABRNode:

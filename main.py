@@ -7,14 +7,14 @@ import time
 
 if __name__ == '__main__':
     Mylist = ABR()
-    Mylist.insertNewValue(51)
-    Mylist.insertNewValue(14)
-    Mylist.insertNewValue(12)
-    Mylist.insertNewValue(64)
-    Mylist.insertNewValue(23)
-    Mylist.insertNewValue(3)
-    Mylist.displayTree()
+    n51 = Mylist.insertNewValue(51)
+    n14 = Mylist.insertNewValue(14)
+    n12 = Mylist.insertNewValue(12)
+    n64 = Mylist.insertNewValue(64)
+    n23 = Mylist.insertNewValue(23)
+    n3 = Mylist.insertNewValue(3)
+    Mylist.display()
     x = Mylist.OS_Select(1)
     if x is not None:
         print(x.key)
-    print(Mylist.OS_Rank(12))
+    print(Mylist.OS_Rank(n51))
