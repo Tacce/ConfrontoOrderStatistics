@@ -1,21 +1,4 @@
-class OrderedList:
-    def __init__(self):
-        self.list = []
-        self.size = 0
-
-    def displayList(self):
-        for i in range(self.size):
-            print(self.list[i], end=' ')
-
-    def insertNewValue(self, value):
-        i = 0
-        while i < self.size and value > self.list[i]:
-            i += 1
-        self.list.insert(i, value)
-        self.size += 1
-
-
-class Node:
+class ListNode:
     def __init__(self, value):
         self.value = value
         self.next = None
@@ -36,7 +19,7 @@ class LinkedOrderedList:
             print('\n', end='')
 
     def insertNewValue(self, newValue):
-        newNode = Node(newValue)
+        newNode = ListNode(newValue)
         if self.head is None:
             self.head = newNode
         elif newValue <= self.head.value:
