@@ -1,12 +1,12 @@
-from Trees import ABR
-from Trees import ABRNode
+from ARN import ARN
+from ABR import ABR
 from Lists import LinkedOrderedList
 import matplotlib.pyplot as plt
 import numpy as np
 import time
 
 if __name__ == '__main__':
-    Mylist = ABR()
+    Mylist = ARN()
     n51 = Mylist.insertNewValue(51)
     n14 = Mylist.insertNewValue(14)
     n12 = Mylist.insertNewValue(12)

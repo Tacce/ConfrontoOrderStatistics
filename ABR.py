@@ -33,7 +33,7 @@ class ABR:
 
     def preorderTreeWalk(self, x):
         if x is not None:
-            print(x.key, end='(')
+            x.printNode()
             self.preorderTreeWalk(x.left)
             print(end=',')
             self.preorderTreeWalk(x.right)
@@ -86,3 +86,6 @@ class ABRNode:
         self.left = None
         self.right = None
         self.p = None
+
+    def printNode(self):
+        print(self.key, end='(')
