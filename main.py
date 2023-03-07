@@ -17,4 +17,4 @@ if __name__ == '__main__':
     x = Mylist.OS_Select(1)
     if x is not None:
         print(x.key)
-    print(Mylist.OS_Rank(n51))
+    print(Mylist.OS_Rank(n64))

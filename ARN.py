@@ -97,6 +97,31 @@ class ARN(ABR):
         x.size = 1 + (x.left.size if x.left is not None else 0) + (x.right.size if x.right is not None else 0)
         y.size = 1 + (y.left.size if y.left is not None else 0) + (y.right.size if y.right is not None else 0)
 
+    def OS_Select(self, i):
+        print('rnsel')
+        x = self.root
+        found = False
+        while not found and x is not None:
+            j = (x.left.size if x.left is not None else 0) + 1
+            if j is i:
+                found = True
+            elif i < j:
+                x = x.left
+            else:
+                x = x.right
+                i = i-j
+
+        return x
+
+    def OS_Rank(self, x):
+        i = (x.left.size if x.left is not None else 0) + 1
+        y = x
+        while y is not self.root:
+            if y is y.p.right:
+                i += (y.p.left.size if y.p.left is not None else 0) + 1
+            y = y.p
+        return i
+
 
 class ARNNode(ABRNode):
     def __init__(self, key):
@@ -110,4 +135,3 @@ class ARNNode(ABRNode):
         else:
             print('B', end='')
         print(self.key, end='(')
-
