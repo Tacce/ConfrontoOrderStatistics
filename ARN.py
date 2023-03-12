@@ -98,7 +98,6 @@ class ARN(ABR):
         y.size = 1 + (y.left.size if y.left is not None else 0) + (y.right.size if y.right is not None else 0)
 
     def OS_Select(self, i):
-        print('rnsel')
         x = self.root
         found = False
         while not found and x is not None:
