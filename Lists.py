@@ -7,6 +7,7 @@ class ListNode:
 class LinkedOrderedList:
     def __init__(self):
         self.head = None
+        self.size = 0
 
     def display(self):
         if self.head is None:
@@ -31,6 +32,7 @@ class LinkedOrderedList:
                 tmpNode = tmpNode.next
             newNode.next = tmpNode.next
             tmpNode.next = newNode
+        self.size += 1
         return newNode
 
     def OS_Select(self, i):
