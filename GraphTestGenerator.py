@@ -7,14 +7,18 @@ import time
 import random
 
 
-class GraphicGenerator:
+class GraphTestGenerator:
+
     def __init__(self, structType, structMaxSize, insertType, pointsNumber):
         if structType == 0:
             self.struct = LinkedOrderedList()
+            self.structName = 'Linked List'
         elif structType == 1:
             self.struct = ABR()
+            self.structName = 'ABR'
         else:
             self.struct = ARN()
+            self.structName = 'ARN'
         self.structType = structType
         self.structMaxSize = structMaxSize
         self.interval = int(self.structMaxSize / pointsNumber)
@@ -24,6 +28,8 @@ class GraphicGenerator:
         self.x[0] = 1
         self.yOSS = np.zeros(pointsNumber + 1)
         self.yOSR = np.zeros(pointsNumber + 1)
+        self.yOSSrange = np.zeros(3)
+        self.yOSRrange = np.zeros(3)
 
     def insertValues(self):
         if self.insertType == 0:  # Sequential
@@ -38,55 +44,60 @@ class GraphicGenerator:
             elif (i + 1) % self.interval == 0:
                 self.yOSS[int((i + 1) / self.interval)] = self.OSSTimeCheck() + self.yOSS[int(i / self.interval)]
                 self.yOSR[int((i + 1) / self.interval)] = self.OSRTimeCheck() + self.yOSR[int(i / self.interval)]
-        self.plotGraph(0)
-        self.plotGraph(1)
 
-    def OSSTimeCheck(self):
+    def plotGraphs(self):
+        self.plotOSGraph(0)
+        self.plotOSGraph(1)
+
+    def OSSTimeCheck(self, rangeTable=0):
         tmp = np.zeros(self.struct.size)
         for i in range(self.struct.size):
             start = time.perf_counter()
             self.struct.OS_Select(i + 1)
             end = time.perf_counter()
             tmp[i] = (end - start) / self.struct.size
-        return np.mean(tmp)
+        if not rangeTable:
+            return np.mean(tmp)
+        else:
+            n = int(self.structMaxSize / 3)
+            self.yOSSrange[0] = np.mean(tmp[:n])
+            self.yOSSrange[1] = np.mean(tmp[n: 2 * n])
+            self.yOSSrange[2] = np.mean(tmp[2 * n:])
 
-    def OSRTimeCheck(self):
+    def OSRTimeCheck(self, rangeTable=0):
         tmp = np.zeros(self.struct.size)
         for i in range(self.struct.size):
             start = time.perf_counter()
             self.struct.OS_Rank(self.nodeArray[i])
             end = time.perf_counter()
             tmp[i] = (end - start) / self.struct.size
-        return np.mean(tmp)
+        if not rangeTable:
+            return np.mean(tmp)
+        else:
+            n = int(self.structMaxSize / 3)
+            self.yOSRrange[0] = (np.mean(tmp[:n]))
+            self.yOSRrange[1] = (np.mean(tmp[n:2 * n]))
+            self.yOSRrange[2] = (np.mean(tmp[2 * n:]))
 
-    def plotGraph(self, graphType):
+    def plotOSGraph(self, graphType):
         if graphType == 0:
             title = 'OS Select '
             y = self.yOSS
         else:
             title = 'OS Rank '
             y = self.yOSR
-
-        if self.structType == 0:
-            title += 'Linked List '
-        elif self.structType == 1:
-            title += 'ABR '
-        else:
-            title += 'RN '
-
+        title += self.structName
         if self.insertType == 0:
-            title += 'Sequential Order '
+            title += ' Sequential Order '
         elif self.insertType == 1:
-            title += 'Random Insert'
-
+            title += ' Random Insert '
+        title += str(self.structMaxSize)
         plt.plot(self.x, y)
         plt.title(title)
         plt.show()
+        # plt.savefig(title)
 
-    def rangeTableDisplay(self):
-        n = int(self.structMaxSize / 3)
-        print('MEDIE OSS FASCE VALORI')
-        print(np.mean(self.yOSS[:n]))
-        print(np.mean(self.yOSS[n:2 * n]))
-        print(np.mean(self.yOSS[2 * n:]))
-        return np.mean(self.yOSS)
+    def rangeTableCalc(self):
+        self.OSSTimeCheck(1)
+        self.OSRTimeCheck(1)
+
