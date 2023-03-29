@@ -39,17 +39,17 @@ class GraphTestGenerator:
         for i in range(self.structMaxSize):
             self.nodeArray[i] = self.struct.insertNewValue(insertArray[i])
             if i == 0:
-                self.yOSS[int((i + 1) / self.interval)] = self.OSSTimeCheck()
-                self.yOSR[int((i + 1) / self.interval)] = self.OSRTimeCheck()
+                self.yOSS[int((i + 1) / self.interval)] = self.__OSSTimeCheck()
+                self.yOSR[int((i + 1) / self.interval)] = self.__OSRTimeCheck()
             elif (i + 1) % self.interval == 0:
-                self.yOSS[int((i + 1) / self.interval)] = self.OSSTimeCheck() + self.yOSS[int(i / self.interval)]
-                self.yOSR[int((i + 1) / self.interval)] = self.OSRTimeCheck() + self.yOSR[int(i / self.interval)]
+                self.yOSS[int((i + 1) / self.interval)] = self.__OSSTimeCheck() + self.yOSS[int(i / self.interval)]
+                self.yOSR[int((i + 1) / self.interval)] = self.__OSRTimeCheck() + self.yOSR[int(i / self.interval)]
 
     def plotGraphs(self):
         self.plotOSGraph(0)
         self.plotOSGraph(1)
 
-    def OSSTimeCheck(self, rangeTable=0):
+    def __OSSTimeCheck(self, rangeTable=0):
         tmp = np.zeros(self.struct.size)
         for i in range(self.struct.size):
             start = time.perf_counter()
@@ -64,7 +64,7 @@ class GraphTestGenerator:
             self.yOSSrange[1] = np.mean(tmp[n: 2 * n])
             self.yOSSrange[2] = np.mean(tmp[2 * n:])
 
-    def OSRTimeCheck(self, rangeTable=0):
+    def __OSRTimeCheck(self, rangeTable=0):
         tmp = np.zeros(self.struct.size)
         for i in range(self.struct.size):
             start = time.perf_counter()
@@ -98,6 +98,6 @@ class GraphTestGenerator:
         # plt.savefig(title)
 
     def rangeTableCalc(self):
-        self.OSSTimeCheck(1)
-        self.OSRTimeCheck(1)
+        self.__OSSTimeCheck(1)
+        self.__OSRTimeCheck(1)
 

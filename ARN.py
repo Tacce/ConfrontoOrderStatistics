@@ -28,10 +28,10 @@ class ARN(ABR):
         else:
             y.right = newNode
         self.size += 1
-        self.insertFixup(newNode)
+        self.__insertFixup(newNode)
         return newNode
 
-    def insertFixup(self, newNode):
+    def __insertFixup(self, newNode):
         while newNode.p is not None and newNode.p.color == RED:
             if newNode.p == newNode.p.p.left:
                 y = newNode.p.p.right
@@ -43,10 +43,10 @@ class ARN(ABR):
                 else:
                     if newNode == newNode.p.right:
                         newNode = newNode.p
-                        self.left_rotate(newNode)
+                        self.__leftRotate(newNode)
                     newNode.p.color = BLACK
                     newNode.p.p.color = RED
-                    self.right_rotate(newNode.p.p)
+                    self.__rightRotate(newNode.p.p)
             else:
                 y = newNode.p.p.left
                 if y is not None and y.color == RED:
@@ -57,13 +57,13 @@ class ARN(ABR):
                 else:
                     if newNode == newNode.p.left:
                         newNode = newNode.p
-                        self.right_rotate(newNode)
+                        self.__rightRotate(newNode)
                     newNode.p.color = BLACK
                     newNode.p.p.color = RED
-                    self.left_rotate(newNode.p.p)
+                    self.__leftRotate(newNode.p.p)
         self.root.color = BLACK
 
-    def left_rotate(self, x):
+    def __leftRotate(self, x):
         y = x.right
         x.right = y.left
         if y.left is not None:
@@ -80,7 +80,7 @@ class ARN(ABR):
         y.size = 1 + (y.left.size if y.left is not None else 0) + (y.right.size if y.right is not None else 0)
         x.size = 1 + (x.left.size if x.left is not None else 0) + (x.right.size if x.right is not None else 0)
 
-    def right_rotate(self, x):
+    def __rightRotate(self, x):
         y = x.left
         x.left = y.right
         if y.right is not None:
