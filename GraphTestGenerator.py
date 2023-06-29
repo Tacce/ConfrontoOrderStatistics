@@ -88,14 +88,15 @@ class GraphTestGenerator:
             y = self.yOSR
         title += self.structName
         if self.insertType == 0:
-            title += ' Sequential Order '
+            title += ' Sequential Insert '
         elif self.insertType == 1:
             title += ' Random Insert '
         title += str(self.structMaxSize)
         plt.plot(self.x, y)
         plt.title(title)
+        fig = plt.gcf()
         plt.show()
-        # plt.savefig(title)
+        fig.savefig(title)
 
     def rangeTableCalc(self):
         self.__OSSTimeCheck(1)

@@ -1,4 +1,6 @@
 from SuperGraphGenerator import SuperGraphGenerator
+import sys
+sys.setrecursionlimit(5000)
 
 if __name__ == '__main__':
     while True:

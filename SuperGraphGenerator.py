@@ -40,22 +40,26 @@ class SuperGraphGenerator:
 
     def plotSuperGraphInsertType(self):
         for j in range(2):
-            title = 'OS Select' + insertTypeArray[j]
+            title = 'OS Select' + insertTypeArray[j] + str(self.n)
             for i in range(3):
                 tmp = self.graphMatrix[i][j]
                 plt.plot(tmp.x, tmp.yOSS, label=tmp.structName)
             plt.title(title)
             plt.legend()
+            fig = plt.gcf()
             plt.show()
+            fig.savefig(title)
 
         for j in range(2):
-            title = 'OS Rank' + insertTypeArray[j]
+            title = 'OS Rank' + insertTypeArray[j] + str(self.n)
             for i in range(3):
                 tmp = self.graphMatrix[i][j]
                 plt.plot(tmp.x, tmp.yOSR, label=tmp.structName)
             plt.title(title)
             plt.legend()
+            fig = plt.gcf()
             plt.show()
+            fig.savefig(title)
 
     def __RangeTableAux(self, data, title, i):
         cell_text = [[f'{x:.3e}' for x in row] for row in data]
@@ -64,6 +68,8 @@ class SuperGraphGenerator:
         ax.axis('off')
         ax.table(cellText=cell_text, rowLabels=['Linked List', 'ABR', 'ARN'],
                  colLabels=['Fascia Bassa', 'Fascia Media', 'Fascia Alta'], loc='center')
-        title += insertTypeArray[i] + str(self.n)
+        title += insertTypeArray[i] + str(self.n) + ' Table'
+        fig = plt.gcf()
         plt.title(title)
         plt.show()
+        fig.savefig(title)
